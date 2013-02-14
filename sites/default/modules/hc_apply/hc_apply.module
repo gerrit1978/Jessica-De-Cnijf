@@ -1,0 +1,112 @@
+<?php
+
+/**
+ * @file
+ * 
+ * This module provides apply-functionality
+ */
+
+/*******************************************************************************
+ * Drupal Hooks
+ ******************************************************************************/
+
+/**
+ * Implements hook_menu
+ */
+function hc_apply_menu() {
+  $items = array();
+  
+  $items['solliciteren/%'] = array(
+    'title' => t('Solliciteren'),
+    'page callback' => '_hc_apply_solliciteren',
+    'page arguments' => array(1),
+    'access arguments' => array('access content'),
+  );
+  
+  return $items;
+}
+
+/**
+ * Implements hook_form_alter
+ */
+function hc_apply_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'webform_client_form_13') {
+    global $user;
+    if ($user->uid > 0) {
+      $user_wrapper = entity_metadata_wrapper('user', $user->uid);
+      
+      $user_email = $user_wrapper->mail->value();
+      $user_firstname = $user_wrapper->field_user_firstname->value();
+      $user_lastname = $user_wrapper->field_user_lastname->value();
+      
+      $form['submitted']['last_name']['#default_value'] = $user_lastname;
+      $form['submitted']['first_name']['#default_value'] = $user_firstname;
+      $form['submitted']['email']['#default_value'] = $user_email;
+      
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_node
+ */
+function hc_apply_preprocess_node(&$variables) {
+  $node = $variables['node'];
+  $type = $node->type;
+  
+  if ($type == 'vacature') {
+    $nid = $node->nid;
+    $variables['content']['apply_link'] = array(
+      '#markup' => l(t('Apply now'), 'solliciteren/' . $nid),
+      '#weight' => 100,
+    );
+  }
+}
+
+/*******************************************************************************
+ * Internal Helper functions
+ ******************************************************************************/
+
+/*
+ * Internal helper function for rendering page
+ */
+function _hc_apply_solliciteren($nid) {
+  
+  // do check if arg(1) is effectively leading to a job node
+  $job_nid = arg(1);
+  $job_node = node_load($job_nid);
+  if (!isset($job_node->type) || $job_node->type != 'vacature') {
+    drupal_goto('<front>');
+    return;
+  }
+  
+  // rendering the page
+  
+  $build = array();
+  
+  // render the apply form
+  $node = node_load(13);  
+  $build['#markup'] = drupal_render(node_view($node));
+  
+  // render links for login or registering when not logged in
+  global $user;
+  if ($user->uid <= 0) {
+    $items = array();
+    
+    // redirect path
+    $current_path = arg(0) . "/" . arg(1);
+    
+    // links
+    $items[] = l(t('Register'), 'user/register', array(
+      'query' => array('destination' => $current_path))
+    );
+    $items[] = l(t('Login'), 'user', array(
+      'query' => array('destination' => $current_path))
+    );
+    
+    $build['#prefix'] = "<h2>Registreer of meld je aan voor sneller solliciteren</h2>"
+      . theme('item_list', array('items' => $items));
+  }
+  
+  return $build;
+}

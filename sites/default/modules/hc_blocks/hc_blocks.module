@@ -14,10 +14,6 @@ function hc_blocks_block_info() {
     'info' => t('Apply with linkedin'),
   );
   
-  $blocks['apply'] = array(
-    'info' => t('Solliciteren na registratie of aanmelden'),
-  );
-  
   $blocks['social_media_job'] = array(
     'info' => t('Social Media links bij een job'),
   );
@@ -38,12 +34,7 @@ function hc_blocks_block_view($delta = '') {
       $block['subject'] = t('Apply with LinkedIn');
       $block['content'] = _hc_blocks_render_linkedin();
       break;
-    
-    case 'apply':
-      $block['subject'] = t('Apply');
-      $block['content'] = _hc_blocks_render_apply();
-      break;
-    
+        
     case 'social_media_job':
       $block['subject'] = t('Social Media Links');
       $block['content'] = _hc_blocks_render_social_media_job();
@@ -88,30 +79,6 @@ function _hc_blocks_render_linkedin() {
   }  
   $output = theme('apply_linkedin', array('jobtitle' => $jobtitle));
   return $output;
-}
-
-
-function _hc_blocks_render_apply() {
-  global $user;
-
-	if ($user->uid <= 0) {
-	  // user not logged in, show register/login links with redirect to current URL
-		$this_url = url(current_path());
-		if (arg(0) == 'node' && is_numeric(arg(1))) {
-		  $nid = arg(1);
-		  $this_url = drupal_get_path_alias('node/' . $nid);
-		}
-
-		$items = array();
-		$items[] = l(t('Login'), 'user', array('query' => array('destination' => $this_url)));
-		$items[] = l(t('Register'), 'user/register', array('query' => array('destination' => $this_url)));
-		$output = theme('item_list', array('items' => $items));
-	} else {
-	  // user is logged in, show (link to) apply form
-	  $output = "Hier het sollicitatieformulier";
-	}
-
-	return $output;
 }
 
 function _hc_blocks_render_social_media_job() {

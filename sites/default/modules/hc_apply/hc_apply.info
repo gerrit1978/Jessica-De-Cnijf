@@ -1,0 +1,6 @@
+name        = Apply
+description = Sollicitatie functionaliteit
+core        = 7.x
+package     = HedgeComm  
+version     = 7.x-1.0
+dependencies[] = webform
