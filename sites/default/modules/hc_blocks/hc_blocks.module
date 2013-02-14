@@ -92,8 +92,26 @@ function _hc_blocks_render_linkedin() {
 
 
 function _hc_blocks_render_apply() {
-  $output = "Hier apply block content";
-  return $output;
+  global $user;
+
+	if ($user->uid <= 0) {
+	  // user not logged in, show register/login links with redirect to current URL
+		$this_url = url(current_path());
+		if (arg(0) == 'node' && is_numeric(arg(1))) {
+		  $nid = arg(1);
+		  $this_url = drupal_get_path_alias('node/' . $nid);
+		}
+
+		$items = array();
+		$items[] = l(t('Login'), 'user', array('query' => array('destination' => $this_url)));
+		$items[] = l(t('Register'), 'user/register', array('query' => array('destination' => $this_url)));
+		$output = theme('item_list', array('items' => $items));
+	} else {
+	  // user is logged in, show (link to) apply form
+	  $output = "Hier het sollicitatieformulier";
+	}
+
+	return $output;
 }
 
 function _hc_blocks_render_social_media_job() {
