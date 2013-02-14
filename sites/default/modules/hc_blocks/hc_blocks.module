@@ -14,6 +14,10 @@ function hc_blocks_block_info() {
     'info' => t('Apply with linkedin'),
   );
   
+  $blocks['apply'] = array(
+    'info' => t('Solliciteren na registratie of aanmelden'),
+  );
+  
   $blocks['social_media_job'] = array(
     'info' => t('Social Media links bij een job'),
   );
@@ -35,13 +39,16 @@ function hc_blocks_block_view($delta = '') {
       $block['content'] = _hc_blocks_render_linkedin();
       break;
     
+    case 'apply':
+      $block['subject'] = t('Apply');
+      $block['content'] = _hc_blocks_render_apply();
+      break;
+    
     case 'social_media_job':
       $block['subject'] = t('Social Media Links');
       $block['content'] = _hc_blocks_render_social_media_job();
       break;
   }
-  
-  
   
   return $block;
 }
@@ -83,6 +90,11 @@ function _hc_blocks_render_linkedin() {
   return $output;
 }
 
+
+function _hc_blocks_render_apply() {
+  $output = "Hier apply block content";
+  return $output;
+}
 
 function _hc_blocks_render_social_media_job() {
   $this_url = url(current_path(), array('absolute' => TRUE));
