@@ -72,7 +72,7 @@ function hc_apply_preprocess_node(&$variables) {
     );
   }
   
-  // change template file for apply form
+  // hide title for apply form
   if ($variables['type'] == 'sollicitatieformulier' && $variables['view_mode'] == 'applyform') {
 		$variables['title'] = '';
   }
