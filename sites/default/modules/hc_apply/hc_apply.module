@@ -32,6 +32,16 @@ function hc_apply_menu() {
 function hc_apply_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == 'webform_client_form_13') {
     global $user;
+
+		// prepopulate job title
+		$job_nid = arg(1);
+		$job_node = node_load($job_nid);
+		$job_title = $job_node->title;
+		$original_markup = $form['submitted']['intro']['#markup'];
+		$new_markup = str_replace('[node:title]', $job_title, $original_markup);
+		$form['submitted']['intro']['#markup'] = $new_markup;
+
+		// prepopulate fields for registered users
     if ($user->uid > 0) {
       $user_wrapper = entity_metadata_wrapper('user', $user->uid);
       
@@ -42,7 +52,6 @@ function hc_apply_form_alter(&$form, &$form_state, $form_id) {
       $form['submitted']['last_name']['#default_value'] = $user_lastname;
       $form['submitted']['first_name']['#default_value'] = $user_firstname;
       $form['submitted']['email']['#default_value'] = $user_email;
-      
     }
   }
 }
@@ -54,6 +63,7 @@ function hc_apply_preprocess_node(&$variables) {
   $node = $variables['node'];
   $type = $node->type;
   
+  // add "Apply Now" link to the bottom of the "vacature" node
   if ($type == 'vacature') {
     $nid = $node->nid;
     $variables['content']['apply_link'] = array(
@@ -61,7 +71,13 @@ function hc_apply_preprocess_node(&$variables) {
       '#weight' => 100,
     );
   }
+  
+  // change template file for apply form
+  if ($variables['type'] == 'sollicitatieformulier' && $variables['view_mode'] == 'applyform') {
+		$variables['title'] = '';
+  }
 }
+
 
 /*******************************************************************************
  * Internal Helper functions
@@ -86,7 +102,7 @@ function _hc_apply_solliciteren($nid) {
   
   // render the apply form
   $node = node_load(13);  
-  $build['#markup'] = drupal_render(node_view($node));
+  $build['#markup'] = drupal_render(node_view($node, 'applyform'));
   
   // render links for login or registering when not logged in
   global $user;
