@@ -6,6 +6,8 @@
  ****************************************************************/
 body {
   background: url(../img/bg-body.jpg) no-repeat right top fixed;
+  color: #222;
+  font-family: Arial, sans-serif;
 }
 
 a:link, a:visited, a:hover {
@@ -14,6 +16,30 @@ a:link, a:visited, a:hover {
   -moz-transition: all 0.1s;
   -webkit-transition: all 0.1s;
   -o-transition: all 0.1s;
+}
+
+h2.block-title {
+  color: black;
+  border-bottom: 1px solid #ededed;
+  font-family: Arial;
+}
+
+a.button {
+  padding: 4px 10px;
+  background: #8dc63f;
+  float: right;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  color: white;
+}
+
+a.button:hover {
+  background: #70845c;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Trebuchet MS", Arial, sans-serif;
 }
 
 /*****************************************************************
@@ -42,6 +68,19 @@ a:link, a:visited, a:hover {
 #zone-branding {
   padding-bottom: 35px;
   border-bottom: 1px solid #ededed;
+}
+
+#block-system-main {
+  clear: both;
+}
+
+#section-footer {
+  margin-top: 50px;
+}
+
+#zone-footer-wrapper {
+  background: #8dc63f;
+  color: #70845c;
 }
 
 /*****************************************************************
@@ -163,4 +202,65 @@ a:link, a:visited, a:hover {
 .block-main-menu ul li.active a, .block-main-menu ul li.active-trail a, .block-main-menu ul li a:hover {
   color: white;
   background: #8dc63f;
+}
+
+/*****************************************************************
+ * Blocks 
+ ****************************************************************/
+
+/* Quote homepage */
+.block-quote {
+  padding-top: 50px;
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  font-size: 1.692em;
+  background: url(../img/quote.png) no-repeat 0 30px;
+}
+
+.block-quote strong {
+  color: #70845c;
+}
+
+/* Carrousel homepage */
+.block-carrousel ul {
+  margin: 0;
+  padding: 0;
+}
+
+.block-carrousel ul li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Kandidaten & bedrijven homepage */
+.block-kandidaat-home,
+.block-bedrijf-home {
+  margin-top: 50px;
+}
+
+.block-kandidaat-home h2.block-title,
+.block-bedrijf-home h2.block-title {
+  font-size: 1.846em;
+  margin-bottom: 15px;
+}
+
+.block-kandidaat-home .content,
+.block-bedrijf-home .content {
+  font-size: 1.231em;
+}
+
+/* Lijn tekst footer */
+.block-footer-line {
+  padding-top: 30px;
+  text-align: center;
+}
+
+.block-footer-line a {
+  color: #70845c;
+  border-bottom: 1px solid #70845c;
+}
+
+.block-footer-line a:hover {
+  color: white;
+  border-bottom: 1px solid white;
 }
