@@ -1,6 +1,166 @@
 /* This file will hold styles for the mobile version of your website (mobile first). */
 /* This also can include ANY global CSS that applies site-wide. Unless overwritten by a more specific style rule, CSS declarations in global.css will apply site-wide. */
 
+/*****************************************************************
+ * General HTML elements 
+ ****************************************************************/
 body {
   background: url(../img/bg-body.jpg) no-repeat right top fixed;
+}
+
+a:link, a:visited, a:hover {
+  text-decoration: none;
+  transition: all 0.1s;
+  -moz-transition: all 0.1s;
+  -webkit-transition: all 0.1s;
+  -o-transition: all 0.1s;
+}
+
+/*****************************************************************
+ * Layout 
+ ****************************************************************/
+
+/* Logo */
+.branding-data {
+  width: 160px;
+  padding-top: 40px;
+  float: left;
+}
+
+/* Header: lang switch - search bar - service menu - main menu */
+.block-search, .block-lang-switch, .block-service-menu {
+  float: right;
+  margin-top: 50px;
+  margin-left: 10px;
+}
+
+.block-main-menu {
+  clear: right;
+  float: right;
+}
+
+#zone-branding {
+  padding-bottom: 35px;
+  border-bottom: 1px solid #ededed;
+}
+
+/*****************************************************************
+ * Search Block 
+ ****************************************************************/
+.block-search {
+  margin-right: 0;
+  position: relative;
+}
+
+.block-search .form-text {
+  margin-right: -30px;
+  padding-right: 35px;
+}
+
+.block-search .form-submit, .block-search .form-submit:hover {
+  border: none;
+  cursor: pointer;
+  width: 18px;
+  height: 15px;
+  background: url(../img/sprite.png) left top no-repeat;
+  text-indent: -999em;
+}
+
+
+/*****************************************************************
+ * Menus 
+ ****************************************************************/
+
+/* Lang Switch */
+.block-lang-switch {}
+.block-lang-switch ul {
+  margin: 0;
+  padding: 0;
+}
+
+.block-lang-switch ul li {
+  list-style: none;
+  float: left;
+  margin: 0;
+  padding: 0;
+  margin-right: 5px;
+}
+
+.block-lang-switch ul li a {
+  color: #70845c;
+  font-size: 1.231em;
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  padding: 3px 8px;
+  border-radius: 5px;
+  text-transform: lowercase;
+}
+
+.block-lang-switch ul li.active a, .block-lang-switch ul li a:hover {
+  color: white;
+  background: #70845c;
+}
+
+/* Service Menu */
+.block-service-menu {}
+.block-service-menu ul {
+  margin: 0;
+  padding: 0;
+}
+
+.block-service-menu ul li {
+  list-style: none;
+  float: left;
+  margin: 0;
+  padding: 0;
+  margin-right: 5px;
+}
+
+.block-service-menu ul li a {
+  color: #70845c;
+  font-size: 1.231em;
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  padding: 3px 8px;
+  border-radius: 5px;
+  text-transform: lowercase;  
+}
+
+.block-service-menu ul li.active a, .block-service-menu ul li.active-trail a, .block-service-menu ul li a:hover {
+  color: white;
+  background: #70845c;
+}
+
+/* Main Menu */
+.block-main-menu {
+  margin-top: 30px;
+}
+
+.block-main-menu ul {
+  margin: 0;
+  padding: 0;
+}
+
+.block-main-menu ul li {
+  list-style: none;
+  float: left;
+  margin: 0;
+  padding: 0;
+  margin-right: 10px;
+}
+
+.block-main-menu ul li.last {
+  margin-right: 0;
+}
+
+.block-main-menu ul li a {
+  text-transform: uppercase;
+  color: #70845c;
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  font-size: 1.538em;
+  padding: 5px 12px;
+  border-radius: 5px;
+}
+
+.block-main-menu ul li.active a, .block-main-menu ul li.active-trail a, .block-main-menu ul li a:hover {
+  color: white;
+  background: #8dc63f;
 }
