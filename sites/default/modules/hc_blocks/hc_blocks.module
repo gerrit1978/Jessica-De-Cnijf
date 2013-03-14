@@ -18,6 +18,10 @@ function hc_blocks_block_info() {
     'info' => t('Social Media links bij een job'),
   );
   
+  $blocks['main_menu_footer'] = array(
+    'info' => t('Main menu footer'),
+  );
+  
   return $blocks;
 }
 
@@ -39,6 +43,10 @@ function hc_blocks_block_view($delta = '') {
       $block['subject'] = t('Social Media Links');
       $block['content'] = _hc_blocks_render_social_media_job();
       break;
+
+    case 'main_menu_footer':
+      $block['subject'] = '';
+      $block['content'] = _hc_blocks_render_main_menu_footer();
   }
   
   return $block;
@@ -85,5 +93,14 @@ function _hc_blocks_render_social_media_job() {
   $this_url = url(current_path(), array('absolute' => TRUE));
   
   $output = theme('social_media_job', array('this_url' => $this_url));
+  return $output;
+}
+
+function _hc_blocks_render_main_menu_footer() {
+
+  $menu_name = variable_get('menu_main_links_source', 'main-menu');
+  $tree = menu_tree($menu_name);
+  $output = drupal_render($tree);
+  
   return $output;
 }
