@@ -5,7 +5,7 @@
  * General HTML elements 
  ****************************************************************/
 body {
-  background: url(../img/bg-body.jpg) no-repeat right top fixed;
+  background: url(../img/bg-body.jpg) no-repeat right 80px fixed;
   color: #222;
   font-family: Arial, sans-serif;
 }
