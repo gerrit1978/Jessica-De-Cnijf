@@ -124,7 +124,7 @@ function _hc_apply_solliciteren() {
     
     $build['#suffix'] = "<div class='block-tip'>"
       . "<p><strong>" . t('Tip: Wil je nog sneller solliciteren en je lopende sollicitaties online volgen?') . "</strong></p>"
-      . "<p>" . $link_login . " " . t('Nog geen Linx profiel?') . " " . $link_register . t('Het is gratis en biedt niets dan voordelen') . "</p>"
+      . "<p>" . $link_login . " " . t('Nog geen Linx profiel?') . " " . $link_register . " " . t('Het is gratis en biedt niets dan voordelen') . "</p>"
       . "</div>";
   }
   
