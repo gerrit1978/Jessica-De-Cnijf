@@ -2,6 +2,29 @@
 /* This also can include ANY global CSS that applies site-wide. Unless overwritten by a more specific style rule, CSS declarations in global.css will apply site-wide. */
 
 /*****************************************************************
+ * Sticky Footer
+ ****************************************************************/
+HTML, BODY {
+  height: 100%;
+}
+
+#page {
+  min-height: 100%;
+  position: relative;
+}
+
+#section-content {
+  padding-bottom: 200px;
+}
+
+#section-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 200px;
+}
+
+/*****************************************************************
  * General HTML elements 
  ****************************************************************/
 body {
@@ -11,11 +34,16 @@ body {
 }
 
 a:link, a:visited, a:hover {
+  color: #70845c;
   text-decoration: none;
   transition: all 0.1s;
   -moz-transition: all 0.1s;
   -webkit-transition: all 0.1s;
   -o-transition: all 0.1s;
+}
+
+a:hover {
+  color: #8dc63f;
 }
 
 h2.block-title {
@@ -66,6 +94,15 @@ h1, h2, h3, h4, h5, h6 {
   float: right;
 }
 
+#region-content {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.front #region-content {
+  padding-top: 20px;
+}
+
 #zone-branding {
   padding-bottom: 35px;
   border-bottom: 1px solid #ededed;
@@ -75,14 +112,11 @@ h1, h2, h3, h4, h5, h6 {
   clear: both;
 }
 
-#section-footer {
-  margin-top: 50px;
-}
-
 #zone-footer-wrapper {
   background: #8dc63f;
   color: #70845c;
   padding-top: 20px;
+  height: 180px;
 }
 
 /*****************************************************************
@@ -488,4 +522,147 @@ h1, h2, h3, h4, h5, h6 {
 .block-footer-line a:hover {
   color: white;
   border-bottom: 1px solid white;
+}
+
+/** Sollicitatie formulier **/
+#webform-component-left,
+#webform-component-right {
+  width: 45%;
+  float: left;
+  margin-bottom: 0;
+}
+
+#webform-component-intro {
+  padding-bottom: 0;
+  font-size: 1.692em;
+  font-family: "Trebuchet MS";
+}
+
+#webform-component-left {
+  margin-right: 5%;
+}
+
+#webform-component-right--cv {
+  margin-bottom: 0;
+  padding-bottom: 5px;
+}
+
+form.webform-client-form .form-item {
+  padding-bottom: 30px;
+}
+
+form.webform-client-form .form-item label {
+  float: left;
+  width: 135px;
+  text-align: right;
+  margin-right: 10px;
+}
+
+form.webform-client-form #webform-component-right .form-item label {
+  width: 90px;
+}
+
+form.webform-client-form #webform-component-right .form-item .form-text {
+  width: 305px;
+}
+
+form.webform-client-form #webform-component-right .form-item .form-textarea {
+  width: 305px;
+  height: 65px;
+}
+
+
+form.webform-client-form .form-item .form-text {
+  float: left;
+  width: 270px;
+  border: 1px solid #c4c4c4;
+}
+
+form.webform-client-form #edit-actions .form-submit {
+  padding: 4px 10px;
+  background: #8dc63f;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  color: white;
+  text-shadow: none;
+  border: none;
+  font-size: 1.231em;
+}
+
+form.webform-client-form #edit-actions .form-submit:hover {
+  background: #70845c;
+}
+
+
+/** Tip solliciteren block **/
+.block-tip {
+  margin-top: 30px;
+  border: 1px solid #8dc63f;
+  padding: 2em;
+  padding-left: 70px;
+  background: url(../img/sprite.png) no-repeat left bottom;
+}
+
+.block-tip p {
+  font-size: 1.231em;
+}
+
+.block-tip p strong {
+  color: #8dc63f;
+  font-family: "Trebuchet MS";
+  font-size: 1.375em;
+}
+
+/** Social Media Links (job) **/
+.block-social-media-job {
+  margin: 40px 0;
+}
+
+.block-social-media-job ul {
+  margin: 0;
+  padding: 0;
+}
+
+.block-social-media-job ul li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  float: left;
+}
+
+.block-social-media-job ul li.fb {
+  margin-right: 40px;
+}
+
+/** Linkedin **/
+.block-apply-linkedin {
+  margin-top: 40px;
+}
+
+/** Main text **/
+.block-system-main {
+  font-size: 1.154em;
+}
+
+/** Job node **/
+.node-type-vacature .field-label {
+  font-size: 1.2em;
+} 
+
+/** Job page **/
+.view-jobs table th {
+  background: #f7f7f7 !important;
+  border-left: none;
+  border-right: none;  
+}
+
+.view-jobs table tr.odd td {
+  background: #ffffff !important;
+  border: none;
+}
+
+.view-jobs table tr.even td {
+  background: #ededed !important;
+  border: none;
 }

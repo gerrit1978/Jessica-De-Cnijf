@@ -16,10 +16,9 @@
 function hc_apply_menu() {
   $items = array();
   
-  $items['solliciteren/%'] = array(
+  $items['solliciteren'] = array(
     'title' => t('Solliciteren'),
     'page callback' => '_hc_apply_solliciteren',
-    'page arguments' => array(1),
     'access arguments' => array('access content'),
   );
   
@@ -33,12 +32,21 @@ function hc_apply_form_alter(&$form, &$form_state, $form_id) {
   if ($form_id == 'webform_client_form_13') {
     global $user;
 
-		// prepopulate job title
-		$job_nid = arg(1);
-		$job_node = node_load($job_nid);
-		$job_title = $job_node->title;
-		$original_markup = $form['submitted']['intro']['#markup'];
-		$new_markup = str_replace('[node:title]', $job_title, $original_markup);
+		// prepopulate job title and job field in webform
+		$new_markup = t('Spontaan solliciteren');
+		$form['submitted']['job']['#value'] = "Spontaan solliciteren";
+		
+		if (is_numeric(arg(1))) {
+			$job_nid = arg(1);
+			$job_node = node_load($job_nid);
+			if (isset($job_node->type) && $job_node->type == 'vacature') {
+				$job_title = $job_node->title;
+			  $original_markup = $form['submitted']['intro']['#markup'];
+			  $new_markup = str_replace('[node:title]', $job_title, $original_markup);
+			  $form['submitted']['job']['#value'] = $job_title;
+			} 
+		}
+		
 		$form['submitted']['intro']['#markup'] = $new_markup;
 
 		// prepopulate fields for registered users
@@ -48,10 +56,18 @@ function hc_apply_form_alter(&$form, &$form_state, $form_id) {
       $user_email = $user_wrapper->mail->value();
       $user_firstname = $user_wrapper->field_user_firstname->value();
       $user_lastname = $user_wrapper->field_user_lastname->value();
+      $user_address = $user_wrapper->field_user_address->value();
+      $user_zip = $user_wrapper->field_user_zip->value();
+      $user_city = $user_wrapper->field_user_city->value();
+      $user_phone = $user_wrapper->field_user_phone->value();
       
-      $form['submitted']['last_name']['#default_value'] = $user_lastname;
-      $form['submitted']['first_name']['#default_value'] = $user_firstname;
-      $form['submitted']['email']['#default_value'] = $user_email;
+      $form['submitted']['left']['last_name']['#default_value'] = $user_lastname;
+      $form['submitted']['left']['first_name']['#default_value'] = $user_firstname;
+      $form['submitted']['left']['address']['#default_value'] = $user_address;
+      $form['submitted']['left']['zip']['#default_value'] = $user_zip;
+      $form['submitted']['left']['city']['#default_value'] = $user_city;
+      $form['submitted']['right']['phone']['#default_value'] = $user_phone;
+      $form['submitted']['right']['email']['#default_value'] = $user_email;
     }
   }
 }
@@ -67,7 +83,7 @@ function hc_apply_preprocess_node(&$variables) {
   if ($type == 'vacature') {
     $nid = $node->nid;
     $variables['content']['apply_link'] = array(
-      '#markup' => l(t('Apply now'), 'solliciteren/' . $nid),
+      '#markup' => l(t('Apply now'), 'solliciteren/' . $nid, array('attributes' => array('class' => 'button'))),
       '#weight' => 100,
     );
   }
@@ -86,18 +102,9 @@ function hc_apply_preprocess_node(&$variables) {
 /*
  * Internal helper function for rendering page
  */
-function _hc_apply_solliciteren($nid) {
-  
-  // do check if arg(1) is effectively leading to a job node
-  $job_nid = arg(1);
-  $job_node = node_load($job_nid);
-  if (!isset($job_node->type) || $job_node->type != 'vacature') {
-    drupal_goto('<front>');
-    return;
-  }
+function _hc_apply_solliciteren() {
   
   // rendering the page
-  
   $build = array();
   
   // render the apply form
@@ -112,16 +119,13 @@ function _hc_apply_solliciteren($nid) {
     // redirect path
     $current_path = arg(0) . "/" . arg(1);
     
-    // links
-    $items[] = l(t('Register'), 'user/register', array(
-      'query' => array('destination' => $current_path))
-    );
-    $items[] = l(t('Login'), 'user', array(
-      'query' => array('destination' => $current_path))
-    );
+    $link_register = l(t('Registreer je dan hier.'), 'user/register', array('query' => array('destination' => $current_path)));
+    $link_login = l(t('Meld je dan aan.'), 'user', array('query' => array('destination' => $current_path)));
     
-    $build['#prefix'] = "<h2>Registreer of meld je aan voor sneller solliciteren</h2>"
-      . theme('item_list', array('items' => $items));
+    $build['#suffix'] = "<div class='block-tip'>"
+      . "<p><strong>" . t('Tip: Wil je nog sneller solliciteren en je lopende sollicitaties online volgen?') . "</strong></p>"
+      . "<p>" . $link_login . " " . t('Nog geen Linx profiel?') . " " . $link_register . t('Het is gratis en biedt niets dan voordelen') . "</p>"
+      . "</div>";
   }
   
   return $build;

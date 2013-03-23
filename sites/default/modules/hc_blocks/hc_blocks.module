@@ -81,7 +81,7 @@ function _hc_blocks_render_linkedin() {
   if (arg(0) == 'node' && is_numeric(arg(1))) {
     $nid = arg(1);
     $node = node_load($nid);
-    if ($node->type == 'job') {
+    if ($node->type == 'vacature') {
       $jobtitle = $node->title;
     } 
   }  
